@@ -1,0 +1,13 @@
+name: Xit-Essentials
+version: ${project.version}
+main: dev.midka.eka.Eka
+api-version: 1.16
+authors: [Midka]
+description: My first plugin
+website: midka.dev
+
+commands:
+  launch:
+    aliases: lch
+  doctor:
+  godboots:
