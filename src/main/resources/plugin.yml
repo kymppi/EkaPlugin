@@ -13,3 +13,4 @@ commands:
   godboots:
   destinyspear:
     aliases: dspear
+  changeteam:
