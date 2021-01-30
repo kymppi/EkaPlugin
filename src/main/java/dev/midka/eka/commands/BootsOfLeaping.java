@@ -31,10 +31,10 @@ public class BootsOfLeaping implements CommandExecutor, Listener {
                     Location loc = player.getLocation();
                     World world = player.getWorld();
 
-                    world.dropItemNaturally(loc, getItem());
+                    world.dropItemNaturally(loc, getGodBoots());
                     player.sendMessage(ChatColor.GOLD + "The Minecraft Gods dropped you a gift.");
                 }
-                player.getInventory().addItem(getItem());
+                player.getInventory().addItem(getGodBoots());
                 player.sendMessage(ChatColor.GOLD + "The Minecraft Gods gave you a gift.");
             } else {
                 sender.sendMessage("You're not allowed to fly.");
@@ -43,7 +43,7 @@ public class BootsOfLeaping implements CommandExecutor, Listener {
         return false;
     }
 
-    public ItemStack getItem() {
+    public static ItemStack getGodBoots() {
         ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
         ItemMeta meta = boots.getItemMeta();
 

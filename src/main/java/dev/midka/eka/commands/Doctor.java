@@ -16,10 +16,7 @@ public class Doctor implements CommandExecutor {
         if (label.equalsIgnoreCase("doctor")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!(player.hasPermission("doctor.use"))) {
-                    player.sendMessage(ChatColor.RED + "You do not have required permissions. Needed: doctor.use");
-                    return true;
-                }
+                if (!(player.hasPermission("eka.doctor.use"))) return true;
                 if (args.length == 0) {
                     // /doctor
                     TextComponent message = new TextComponent("Would you like to be healed?");

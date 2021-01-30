@@ -10,7 +10,21 @@ commands:
   launch:
     aliases: lch
   doctor:
+    permission: eka.doctor.use
+    permission-message: You do not have permission!
+    usage: /doctor
+    description: Ask's you do you want to be healed
+
   godboots:
   destinyspear:
     aliases: dspear
   changeteam:
+  gamble:
+
+
+permissions:
+  eka.*:
+    default: op
+    children:
+      eka.gamble.use: true
+      eka.doctor.use: true

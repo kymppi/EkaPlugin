@@ -7,6 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Eka extends JavaPlugin {
 
+    // Plugin
+    public static Eka instance;
+
     // PluginManager
     PluginManager pm = Bukkit.getServer().getPluginManager();
 
@@ -20,6 +23,7 @@ public final class Eka extends JavaPlugin {
         this.getCommand("Godboots").setExecutor(new BootsOfLeaping());
         this.getCommand("DestinySpear").setExecutor(new SpearOfDestiny());
         this.getCommand("ChangeTeam").setExecutor(new ChangeTeam());
+        this.getCommand("Gamble").setExecutor(new Gamble());
 
         // Listeners
         pm.registerEvents(new BootsOfLeaping(), this);
@@ -33,5 +37,13 @@ public final class Eka extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static Eka getInstance() {
+        return instance;
+    }
+
+    public void setInstance(Eka instance) {
+        this.instance = instance;
     }
 }
