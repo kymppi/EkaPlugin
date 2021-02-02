@@ -99,7 +99,6 @@ public class ChangeTeam implements CommandExecutor, Listener {
             case 8:
                 player.closeInventory();
                 player.sendMessage(ChatColor.GOLD + "Closed team changer.");
-                player.closeInventory();
                 break;
         }
     }
