@@ -111,7 +111,6 @@ public class SpearOfDestiny implements CommandExecutor, Listener {
                     for (int i = 1; i < 4; i++) {
                         loc.getWorld().spawnEntity(loc, EntityType.DROWNED);
                         loc.setX(loc.getX() + i);
-                        Bukkit.getServer().getConsoleSender().sendMessage("Spawned");
                     }
                 }
             }

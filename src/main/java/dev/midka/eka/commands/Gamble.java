@@ -1,11 +1,18 @@
 package dev.midka.eka.commands;
 
 import dev.midka.eka.Eka;
-import org.bukkit.*;
 import org.bukkit.command.Command;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,9 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Gamble implements CommandExecutor {
-
-    Eka plugin = Eka.getInstance();
+public class Gamble implements CommandExecutor, Listener {
 
     List<Inventory> invs = new ArrayList<Inventory>();
     public static ItemStack[] contents;
@@ -31,9 +36,9 @@ public class Gamble implements CommandExecutor {
                 Player player = (Player) commandSender;
                 ItemStack fee = new ItemStack(Material.DIAMOND);
                 fee.setAmount(3);
-                if (player.hasPermission("eka.gamble.use"))
-                    if (player.getInventory().getItemInMainHand().isSimilar(fee)) {
-                        player.getInventory().remove(fee);
+                if (player.hasPermission("eka.gamble.use")) {
+                    if (player.getInventory().getItemInMainHand().getType().equals(Material.DIAMOND) && player.getInventory().getItemInMainHand().getAmount() >= 3) {
+                        player.getInventory().removeItem(fee);
                         // spin GUI
                         spin(player);
                         return true;
@@ -41,6 +46,7 @@ public class Gamble implements CommandExecutor {
                         player.sendMessage(ChatColor.DARK_RED + "Fee: 3 diamonds");
                         return true;
                     }
+                }
             } else {
                 commandSender.sendMessage("No gambling for you");
             }
@@ -84,17 +90,18 @@ public class Gamble implements CommandExecutor {
         player.openInventory(inv);
 
         Random r = new Random();
-        double seconds = 1.0 + (20 - 1) * r.nextDouble();
+        double seconds = 7.0 + (12.0 - 7.0) * r.nextDouble();
+        //double seconds = 2.5;
 
         new BukkitRunnable() {
             double delay = 0;
-            int ticks =  0;
+            int ticks = 0;
             boolean done = false;
 
             public void run() {
                 if (done) return;
                 ticks++;
-                delay += (1 / 20 * seconds);
+                delay += 1 / ( 20 * seconds);
                 if (ticks > delay * 10) {
                     ticks = 0;
                     for (int itemStacks = 9; itemStacks < 18; itemStacks++) {
@@ -113,17 +120,13 @@ public class Gamble implements CommandExecutor {
                                     World world = player.getWorld();
 
                                     world.dropItemNaturally(loc, item);
-                                    player.updateInventory();
-                                    player.closeInventory();
-                                    player.sendMessage(ChatColor.GOLD + "You won: " + item.getItemMeta().getDisplayName());
-                                    cancel();
                                 } else {
                                     player.getInventory().addItem(item);
-                                    player.updateInventory();
-                                    player.closeInventory();
-                                    player.sendMessage(ChatColor.GOLD + "You won: " + item.getItemMeta().getDisplayName());
-                                    cancel();
                                 }
+                                player.updateInventory();
+                                player.closeInventory();
+                                player.sendMessage(ChatColor.GOLD + "You won: " + item.getItemMeta().getDisplayName() != null ? item.getItemMeta().getDisplayName() : item.getItemMeta().getLocalizedName());
+                                cancel();
                             }
                         }.runTaskLater(Eka.getPlugin(Eka.class), 50);
                         cancel();
@@ -131,6 +134,17 @@ public class Gamble implements CommandExecutor {
                 }
             }
 
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(Eka.getInstance(), 0, 1);
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        player.sendMessage(invs.toString());
+        if (!invs.contains(event.getInventory()))
+            return;
+
+        event.setCancelled(true);
+        return;
     }
 }

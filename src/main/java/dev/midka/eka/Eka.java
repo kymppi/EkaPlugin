@@ -17,6 +17,9 @@ public final class Eka extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        // Instance
+        setInstance(this);
+
         // Commands
         this.getCommand("Launch").setExecutor(new Launch());
         this.getCommand("Doctor").setExecutor(new Doctor());
@@ -24,11 +27,13 @@ public final class Eka extends JavaPlugin {
         this.getCommand("DestinySpear").setExecutor(new SpearOfDestiny());
         this.getCommand("ChangeTeam").setExecutor(new ChangeTeam());
         this.getCommand("Gamble").setExecutor(new Gamble());
+        this.getCommand("Gmc").setExecutor(new Game());
 
         // Listeners
         pm.registerEvents(new BootsOfLeaping(), this);
         pm.registerEvents(new SpearOfDestiny(), this);
         pm.registerEvents(new ChangeTeam(), this);
+        pm.registerEvents(new Gamble(), this);
 
         // Create changeTeam GUI
         ChangeTeam.createInv();

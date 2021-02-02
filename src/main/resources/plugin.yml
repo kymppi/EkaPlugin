@@ -20,6 +20,12 @@ commands:
     aliases: dspear
   changeteam:
   gamble:
+  gmc:
+    permission: eka.gamemode.change
+    aliases:
+      - gms
+      - gmsr
+      - gma
 
 
 permissions:
@@ -28,3 +34,4 @@ permissions:
     children:
       eka.gamble.use: true
       eka.doctor.use: true
+      eka.gamemode.change: true
